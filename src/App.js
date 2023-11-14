@@ -1,5 +1,4 @@
 import { RouterProvider } from "react-router-dom";
-
 import router from "./routes/route"; 
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/theme";
@@ -13,5 +12,3 @@ function App() {
   );
 }
 export default App;
-
-//huiuui

@@ -2,7 +2,7 @@
 // 디자이너가 정의한 디자인과 관련된 일련의 값들을 토큰화 시켜서 변수로 관리하는 것
 
 const colors = {
-  primary: "#00C7AE",
+  primary: "lightblue",
   secondary: "#EBF1F4",
   black: "#000000",
   white: "#ffffff",
