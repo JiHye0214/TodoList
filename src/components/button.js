@@ -33,7 +33,8 @@ const variantCSS = {
 };
 
 const sizeCSS = {
-  small: css``,
+  small: css`
+  padding: 10px;`,
   medium: css``,
   full: css`
     width: 100%;
