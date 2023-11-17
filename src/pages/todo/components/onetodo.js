@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useRef, useState } from "react"
 import { flexCenter } from "../../../styles/common";
 
-const OneTodo = ({todo, editMode}) => {
+const OneTodo = ({todo, editMode, HandleDeleteBTN}) => {
     const [todoState, setTodoState] = useState(todo.state)
     const [menuState, setMenuState] = useState(false);
     const [editModeState, setEditModeState] = useState(editMode);
@@ -18,6 +18,7 @@ const OneTodo = ({todo, editMode}) => {
         !todoState && setMenuState((prev) => !prev)
     }
 
+    // 수정
     const onClickEditBTN = () => {
         !todoState && setEditModeState(true)
         setMenuState(false)
@@ -27,6 +28,13 @@ const OneTodo = ({todo, editMode}) => {
         setEditModeState(false)
         todo.title = TodoTitle.current.value;
         todo.content = TodoContent.current.value;
+    }
+
+    // 삭제
+    const onClickDeleteBTN = () => {
+        if(window.confirm("삭제하시겠습니까?")){
+            HandleDeleteBTN(todo.id);
+        }
     }
 
     return(
@@ -41,7 +49,7 @@ const OneTodo = ({todo, editMode}) => {
                         <HambugMenu onClick={onClickHamb}>☰</HambugMenu>
                         <HambugContainer state={menuState}>
                             <Menu onClick={onClickEditBTN}>modify</Menu>
-                            <Menu>delete</Menu>
+                            <Menu onClick={onClickDeleteBTN}>delete</Menu>
                         </HambugContainer>
                     </Hamburger>
                     <FinBTN state = {editModeState} onClick={onClickFinBTN}>FIN</FinBTN>

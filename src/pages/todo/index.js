@@ -2,11 +2,12 @@ import styled from "styled-components"
 import { flexCenter } from "../../styles/common"
 import Todolist from "./components/todolist"
 import TDButton from "../../components/button";
+import { useState } from "react";
 
 const TodoPage = () => {
 
     // TODO : add button 구현 / 삭제 구현
-    // 근데 나 1116일은 힘들어 왜냐면 미용실도 가고 치과도 가고 신림에 혼자 찍으러 가고 엽떡 픽업도 했어
+    // 근데 나 1116일은 힘들어 왜냐면 미용실도 가고 치과도 가고 신림에 혼자 찍으러 가고 신대방 엽떡 픽업도 했어
     // 한 번만 이렇게 하고 넘어가자 나 힘드러
     // 내일은 증말 열심히 할게
     // 오늘 강의 너무 집중할 내용이 많아서 3시간 딱 걸린 듯
@@ -16,9 +17,13 @@ const TodoPage = () => {
     // 하지만 머리 마음에 들기 때문에 만족스러움 ㅋ
     // 씻으러 가께 내일의 나야 잘부탁해
 
+
     const editMode = false;
 
-    const todos = [
+    // ⭐⭐⭐ 배열이 바뀔 때마다 리렌더하므로
+    // 그냥 배열 자체에다가 useState 걸면 됨 
+
+    const [todos, setTodos] = useState([
         {
             id : 1,
             title : "title1",
@@ -31,13 +36,33 @@ const TodoPage = () => {
             content : "content2",
             state : true,
         },
-    ]
+        {
+            id : 25,
+            title : "title25",
+            content : "content25",
+            state : true,
+        },
+        {
+            id : 258,
+            title : "title259",
+            content : "content258",
+            state : true,
+        },
+    ])
+
+    // 삭제를 여기서 구현해야지 
+    // 내가 클릭한 todo의 id를 찾기 위해서!
+    // ⭐⭐⭐ filter 사용법 익히고 , todos state 걸기
+    const HandleDeleteBTN = (id) => {
+        const deleteTodos = todos.filter((todos) => todos.id !== id)
+        setTodos(deleteTodos);
+    }
 
     return (
         <Wrapper>
             <Container>
                 <h2>MY TODO LIST</h2>
-                <Todolist todos={todos} editMode={editMode}/>
+                <Todolist todos={todos} editMode={editMode} {...{HandleDeleteBTN}}/>
                 <TDButton variant={"primary"} size={"full"}>
                     <h3>ADD</h3>
                 </TDButton>
