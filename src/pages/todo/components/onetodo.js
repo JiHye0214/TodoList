@@ -2,8 +2,7 @@ import styled from "styled-components"
 import { useRef, useState } from "react"
 import { flexCenter } from "../../../styles/common";
 
-const OneTodo = ({todo, editMode, HandleDeleteBTN}) => {
-    const [todoState, setTodoState] = useState(todo.state)
+const OneTodo = ({todo, editMode, handleDeleteBTN, handleEditTodo}) => {
     const [menuState, setMenuState] = useState(false);
     const [editModeState, setEditModeState] = useState(editMode);
 
@@ -11,16 +10,16 @@ const OneTodo = ({todo, editMode, HandleDeleteBTN}) => {
     const TodoContent = useRef(null);
 
     const onClickTodoState = () => {
-        !menuState && !editModeState && setTodoState((prev) => !prev)
+        handleEditTodo(todo.id, {state : !todo.state})
     }
 
     const onClickHamb = () => {
-        !todoState && setMenuState((prev) => !prev)
+        setMenuState((prev) => !prev)
     }
 
     // 수정
     const onClickEditBTN = () => {
-        !todoState && setEditModeState(true)
+        setEditModeState(true)
         setMenuState(false)
     }
 
@@ -33,16 +32,16 @@ const OneTodo = ({todo, editMode, HandleDeleteBTN}) => {
     // 삭제
     const onClickDeleteBTN = () => {
         if(window.confirm("삭제하시겠습니까?")){
-            HandleDeleteBTN(todo.id);
+            handleDeleteBTN(todo.id);
         }
     }
 
     return(
-        <Wrapper state = {todoState}>
+        <Wrapper state = {todo.state}>
             <Container>
                 <Header onClick={onClickTodoState}>
-                    <TodoState state = {todoState}>{editModeState ? <TodoText defaultValue={todo.title} ref={TodoTitle}></TodoText> : todo.title}</TodoState>
-                    <TodoState state = {todoState}>{editModeState ? <TodoText defaultValue={todo.content} ref={TodoContent}></TodoText> : todo.content}</TodoState>
+                    <TodoState state = {todo.state}>{editModeState ? <TodoText defaultValue={todo.title} ref={TodoTitle}></TodoText> : todo.title}</TodoState>
+                    <TodoState state = {todo.state}>{editModeState ? <TodoText defaultValue={todo.content} ref={TodoContent}></TodoText> : todo.content}</TodoState>
                 </Header>
                 <Body>
                     <Hamburger>

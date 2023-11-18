@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import OneTodo from "./onetodo"
 
-const Todolist = ({todos, editMode, HandleDeleteBTN}) => {
+const Todolist = ({todos, editMode, HandleDeleteBTN, handleEditTodo}) => {
     
     return (
         <Wrapper>
@@ -9,7 +9,7 @@ const Todolist = ({todos, editMode, HandleDeleteBTN}) => {
             {/* 하나의 todo, index 전달 */}
             {/* 사실 OneTodo에서 index 필요 없는데 map에서는 key값 있어야 에러 안 남 */}
             {todos.map((todo, index) => (
-                <OneTodo key={index} todo={todo} editMode={editMode} {...{HandleDeleteBTN}}/>
+                <OneTodo key={index} todo={todo} editMode={editMode} {...{HandleDeleteBTN, handleEditTodo}}/>
             ))}
         </Wrapper>
     )

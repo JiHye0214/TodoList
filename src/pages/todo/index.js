@@ -3,6 +3,7 @@ import { flexCenter } from "../../styles/common"
 import Todolist from "./components/todolist"
 import TDButton from "../../components/button";
 import { useState } from "react";
+import AddTodoModal from "./components/addTodoModal";
 
 const TodoPage = () => {
 
@@ -19,6 +20,7 @@ const TodoPage = () => {
 
 
     const editMode = false;
+    const [addModalState, setAddModalState] = useState(false);
 
     // ⭐⭐⭐ 배열이 바뀔 때마다 리렌더하므로
     // 그냥 배열 자체에다가 useState 걸면 됨 
@@ -58,16 +60,47 @@ const TodoPage = () => {
         setTodos(deleteTodos);
     }
 
+    // ⭐⭐⭐ 여는 함수랑 닫는 함수를 만들어서 닫는 함수만 modal창에 넘겨주기
+    const onClickAddBTN = () => {
+        setAddModalState(true)
+        console.log(addModalState)
+    }
+    const onCloseAddBTN = () => {
+        setAddModalState(false)
+    }
+
+
+    // ⭐⭐⭐ 추가는 push가 아니라 객체 생성 후 setTodos
+    const handleAddTodo = (title, content) => {
+        const newTodo = {
+            id : Math.random(Math.random() * 100000), 
+            title, 
+            content, 
+            state : false };
+
+        setTodos((prev) => [newTodo, ...prev])
+    }
+
+    const handleEditTodo = (id, todo) => {
+        const _todos = [...todos]
+        let selectTodoIndex = _todos.findIndex((todo) => todo.id === id)
+        _todos[selectTodoIndex] = {...todos[selectTodoIndex], ...todo}
+        setTodos(_todos)
+    }
+
     return (
+        <>
+        {addModalState && (<AddTodoModal {...{onCloseAddBTN, handleAddTodo}}/>)}{" "}
         <Wrapper>
             <Container>
                 <h2>MY TODO LIST</h2>
-                <Todolist todos={todos} editMode={editMode} {...{HandleDeleteBTN}}/>
+                <Todolist todos={todos} editMode={editMode} {...{HandleDeleteBTN, handleEditTodo}}/>
                 <TDButton variant={"primary"} size={"full"}>
-                    <h3>ADD</h3>
+                    <h3 onClick={onClickAddBTN} {...{addModalState}}>ADD</h3>
                 </TDButton>
             </Container>
         </Wrapper>
+        </>
     )
 }
 
