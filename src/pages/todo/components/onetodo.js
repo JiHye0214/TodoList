@@ -33,7 +33,6 @@ const OneTodo = ({todo, editMode, handleDeleteBTN, handleEditTodo}) => {
     const onClickDeleteBTN = () => {
         if(window.confirm("삭제하시겠습니까?")){
             handleDeleteBTN(todo.id);
-            console.log("하하")
         }
     }
 
